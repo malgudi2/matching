@@ -41,7 +41,7 @@ if st.session_state.teacher_mode:
 
 # ---------------- LOAD GLOSSARY ----------------
 BASE_DIR = Path(__file__).parent
-DEFAULT_FILE = BASE_DIR / "glossary.txt"
+DEFAULT_FILE = BASE_DIR / "Glossary.txt"
 
 
 def validate_glossary(data: dict):
