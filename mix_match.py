@@ -1,45 +1,34 @@
 import streamlit as st
 import json
 import random
+from pathlib import Path
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
-    page_title="Gita Ch 15 – Matching Game",
+    page_title="Bhagwad Gita  – Learning Game",
     layout="centered"
 )
 
-st.title("🕉️ Gita Chapter 15 – Matching Game")
+st.title("🕉️ Bhagwad Gita  – Learning Game")
 st.markdown(
     "Match the **Sanskrit term** with the correct **explanation number**.\n\n"
     "📱 *Mobile-friendly version*"
 )
 
-# ---------- INPUT JSON ----------
-glossary_json = """
-{
-  "Aśvattha": "The world-tree of samsāra (empirical existence), ever-changing and impermanent; that which does not remain the same even till tomorrow.",
-  "Mūlam": "The root or cause; symbolically Brahman, the unseen foundation from which the world appears to arise.",
-  "Ūrdhva-mūlam": "Having its roots above; indicating that the origin of the universe lies in the transcendental Reality, not in matter.",
-  "Adhaḥ-śākham": "Branches growing downward; the manifestation of the world into grosser levels of existence.",
-  "Chandāṁsi": "The Vedic hymns; rituals and promises that nourish worldly involvement when misunderstood.",
-  "Parṇāni": "Leaves of the tree; symbolic of Vedic injunctions that sustain worldly life.",
-  "Guṇa": "The three qualities—sattva, rajas, and tamas—which bind consciousness to matter.",
-  "Karma-anubandhīni": "Bound by actions; indicating that worldly life continues due to past actions and their vasanas.",
-  "Asaṅga-śastra": "The weapon of detachment; discriminative knowledge used to cut attachment to the world.",
-  "Padam Avyayam": "The imperishable state; Brahman, beyond change, time, and decay.",
-  "Puruṣa": "Consciousness, the Self, which illumines all experiences.",
-  "Kṣara Puruṣa": "The perishable self; the ego-bound individual identified with body and mind.",
-  "Akṣara Puruṣa": "The imperishable; the subtle, unmanifest causal state (Hiraṇyagarbha or total mind).",
-  "Uttama Puruṣa": "The Supreme Self (Puruṣottama); Brahman that transcends both the perishable and imperishable.",
-  "Paramātma": "The Supreme Consciousness that enlivens, sustains, and governs all beings.",
-  "Jīva-bhūtaḥ": "The individual soul; Pure Consciousness conditioned by the mind and senses.",
-  "Vaishvānara": "The digestive fire; the same Consciousness functioning as the power of digestion in all beings.",
-  "Smṛti": "Memory; the power of recollection bestowed by the Lord.",
-  "Apohanam": "Forgetfulness; also governed by the Lord, essential for functional living."
-}
-"""
+# ---------- LOAD GLOSSARY FROM FILE ----------
+GLOSSARY_FILE = Path("glossary.txt")
 
-glossary = json.loads(glossary_json)
+if not GLOSSARY_FILE.exists():
+    st.error("❌ glossary.txt not found. Please place it in the same folder as this app.")
+    st.stop()
+
+try:
+    with open(GLOSSARY_FILE, "r", encoding="utf-8") as f:
+        glossary = json.load(f)
+except json.JSONDecodeError:
+    st.error("❌ glossary.txt is not valid JSON.")
+    st.stop()
+
 NUM_QUESTIONS = 10
 
 # ---------- SESSION STATE ----------
@@ -54,7 +43,7 @@ if "terms" not in st.session_state:
     st.session_state.index = 0
     st.session_state.score = 0
     st.session_state.finished = False
-    st.session_state.incorrect = []  # store incorrect matches
+    st.session_state.incorrect = []
 
 # ---------- EXPLANATIONS (COLLAPSIBLE) ----------
 with st.expander("📖 Tap to view explanations"):
@@ -131,4 +120,3 @@ else:
     if st.button("🔁 Play Again", use_container_width=True):
         st.session_state.clear()
         st.rerun()
-
