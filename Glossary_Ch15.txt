@@ -1,4 +1,11 @@
 {
+ "_meta": {
+    "chapter": "Bhagavad Gita Chapter 15",
+    "title": "Karma Yoga",
+    "commentary": "Swami Chinmayananda",
+    "verses": "15.1–15.20"
+  },
+
   "Aśvattha": "The world-tree of samsāra (empirical existence), ever-changing and impermanent; that which does not remain the same even till tomorrow.",
   "Mūlam": "The root or cause; symbolically Brahman, the unseen foundation from which the world appears to arise.",
   "Ūrdhva-mūlam": "Having its roots above; indicating that the origin of the universe lies in the transcendental Reality, not in matter.",
